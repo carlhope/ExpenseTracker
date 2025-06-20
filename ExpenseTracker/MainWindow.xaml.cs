@@ -25,5 +25,12 @@ namespace ExpenseTracker
             var addWindow = new AddExpenseWindow();
             addWindow.ShowDialog();
         }
+
+        private void History_Btn_Click(object sender, RoutedEventArgs e)
+        {
+            var historyWindow = new HistoryWindow();
+            historyWindow.ShowDialog();
+
+        }
     }
 }

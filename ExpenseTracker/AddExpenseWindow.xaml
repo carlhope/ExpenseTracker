@@ -15,7 +15,7 @@
 
 
                 <TextBlock Text="Amount:" Margin="0,20,0,5" Height="40" FontSize="16" Padding="10,5"/>
-                <TextBox x:Name="AmountTextBox" Height="40" FontSize="16" Padding="10,5" Text="{Binding Amount, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox x:Name="AmountTextBox" Height="40" FontSize="16" Padding="10,5" Text="{Binding AmountInput, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Text="Date:" Margin="0,20,0,5" Height="40" FontSize="16" Padding="10,5"/>
                 <DatePicker x:Name="DatePicker" Height="40" FontSize="16" Padding="10,5" SelectedDate="{Binding Date}"/>

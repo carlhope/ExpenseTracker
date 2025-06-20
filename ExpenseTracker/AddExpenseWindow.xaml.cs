@@ -30,11 +30,17 @@ namespace ExpenseTracker
         }
 
         private void SaveExpense_Click(object sender, RoutedEventArgs e)
-        { 
-            ViewModel.SaveExpense();
+        {
+            if (ViewModel.SaveExpense())
+            {
 
-            MessageBox.Show("Expense saved!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-            this.Close();
+                MessageBox.Show("Expense saved!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Please fill in all fields correctly.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

@@ -7,9 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="Add Expense"
+        <Button x:Name="Add_Expense_Btn" Content="Add Expense"
         Width="150" Height="40"
         FontSize="16"
-        Click="OpenAddExpenseWindow_Click" />
+        Click="OpenAddExpenseWindow_Click" Margin="0,0,0,0" />
+        <Button x:Name="History_Btn" Content="History" HorizontalAlignment="Left" Margin="105,0,0,0" VerticalAlignment="Center" Height="40" Width="150" Click="History_Btn_Click"/>
     </Grid>
 </Window>

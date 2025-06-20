@@ -3,8 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -34,14 +36,16 @@ namespace ExpenseTracker.ViewModels
             }
         }
 
-        private decimal _amount;
-        public decimal Amount
+        public decimal Amount { get; private set; }
+
+        private string _amountInput;
+        public string AmountInput
         {
-            get => _amount;
+            get => _amountInput;
             set
             {
-                _amount = value;
-                OnPropertyChanged(nameof(Amount));
+                _amountInput = value;
+                OnPropertyChanged(nameof(AmountInput));
             }
         }
 
@@ -59,13 +63,17 @@ namespace ExpenseTracker.ViewModels
 
         protected void OnPropertyChanged(string propertyName) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        public void SaveExpense()
+        public bool SaveExpense()
         {
-            if (string.IsNullOrWhiteSpace(Description) || Amount <= 0)
-            {
-                // Optional: You could expose a validation message property here
-                return;
-            }
+
+            if (!Regex.IsMatch(AmountInput ?? "", @"^\d+(\.\d{1,2})?$"))
+                return false;
+
+            var parsed = decimal.Parse(AmountInput, CultureInfo.InvariantCulture);
+            if (parsed <= 0 || string.IsNullOrWhiteSpace(Description))
+                return false;
+
+            Amount = parsed;
 
             var expense = new Expense
             {
@@ -76,6 +84,7 @@ namespace ExpenseTracker.ViewModels
             };
 
             ExpenseStore.Expenses.Add(expense);
+            return true;
         }
     }
 }
