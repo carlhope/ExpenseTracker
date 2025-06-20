@@ -8,17 +8,17 @@
         <ScrollViewer VerticalScrollBarVisibility="Auto" PanningMode="VerticalOnly">
             <StackPanel Margin="20">
                 <TextBlock Text="Description:" Margin="0,5,0,5" Height="40" FontSize="16" Padding="10,5"/>
-                <TextBox x:Name="DescriptionTextBox" Height="30" FontSize="14" />
+                <TextBox x:Name="DescriptionTextBox" Height="30" FontSize="14" Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
 
                 <TextBlock Text="Category:" Margin="0,20,0,5" Height="40" FontSize="16" Padding="10,5"/>
-                <ComboBox x:Name="CategoryComboBox" Height="30" FontSize="14"/>
+                <ComboBox x:Name="CategoryComboBox" Height="30" FontSize="14" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}" />
 
 
                 <TextBlock Text="Amount:" Margin="0,20,0,5" Height="40" FontSize="16" Padding="10,5"/>
-                <TextBox x:Name="AmountTextBox" Height="40" FontSize="16" Padding="10,5"/>
+                <TextBox x:Name="AmountTextBox" Height="40" FontSize="16" Padding="10,5" Text="{Binding Amount, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Text="Date:" Margin="0,20,0,5" Height="40" FontSize="16" Padding="10,5"/>
-                <DatePicker x:Name="DatePicker" Height="40" FontSize="16" Padding="10,5"/>
+                <DatePicker x:Name="DatePicker" Height="40" FontSize="16" Padding="10,5" SelectedDate="{Binding Date}"/>
 
                 <Button Content="Save Expense" Click="SaveExpense_Click" Margin="0,20,0,0" Height="40" FontSize="16"/>
             </StackPanel>
