@@ -1,5 +1,4 @@
-﻿using LiveChartsCore;
-using LiveChartsCore.SkiaSharpView;
+﻿
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
@@ -33,6 +32,17 @@ namespace ExpenseTracker.ViewModels
                 .Select(g => g.Key.ToString())
                 .FirstOrDefault() ?? "N/A";
 
+        private double _plotHeight;
+        public double PlotHeight
+        {
+            get => _plotHeight;
+            set
+            {
+                _plotHeight = value;
+                OnPropertyChanged(nameof(PlotHeight));
+            }
+        }
+
 
         public MainWindowViewModel()
         {
@@ -56,6 +66,11 @@ namespace ExpenseTracker.ViewModels
                     })
                 .ToList();
 
+            var categoryCount = grouped.Count;
+            var barHeight = 40; // pixels per bar (adjust to taste)
+
+            PlotHeight = (categoryCount * barHeight)+200;
+
 
             //clear old series and axes data
             MyPlotModel.Series.Clear();
@@ -75,18 +90,28 @@ namespace ExpenseTracker.ViewModels
                 // Position the category axis on the left side
                 Position = AxisPosition.Left,
                 // Set the labels to the category names
-                ItemsSource = grouped.Select(g => g.Category).ToList()
+                ItemsSource = grouped.Select(g => g.Category).ToList(),
+                IsZoomEnabled = false,
+                IsPanEnabled = false
             });
-            // Add a linear axis for the values
-            MyPlotModel.Axes.Add(new LinearAxis
+            // Add a Logarithmic axis allowing for better visibility of small amounts
+
+
+            MyPlotModel.Axes.Add(new LogarithmicAxis
             {
-                // Position the linear axis on the bottom side
                 Position = AxisPosition.Bottom,
-                // Set Minimum padding to zero
-                MinimumPadding = 0,
-                // Remove space before axis start at zero
-                AbsoluteMinimum = 0
+                Title = "Amount (£)",
+                Base = 10,
+                Minimum = 1,
+                MinorStep = 1,
+                MajorGridlineStyle = LineStyle.Solid,
+                MinorGridlineStyle = LineStyle.Dot,
+                IsZoomEnabled = false,
+                IsPanEnabled = false
             });
+
+
+
             // Invalidate the plot to refresh the view
 
             MyPlotModel.InvalidatePlot(true);
