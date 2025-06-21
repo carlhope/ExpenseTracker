@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using ExpenseTracker.ViewModels;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -16,9 +17,12 @@ namespace ExpenseTracker
     /// </summary>
     public partial class MainWindow : Window
     {
+        private MainWindowViewModel ViewModel => (MainWindowViewModel)DataContext;
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainWindowViewModel();
+
         }
         private void OpenAddExpenseWindow_Click(object sender, RoutedEventArgs e)
         {
