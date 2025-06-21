@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ExpenseTracker"
         mc:Ignorable="d"
-        Title="Expense History" Height="400" Width="500"
+        Title="Expense History" Height="400" Width="350"
         WindowStartupLocation="CenterScreen">
+
 
     <Grid Margin="20">
         <Grid.RowDefinitions>
@@ -14,35 +15,33 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-        <Label Grid.Row="0" Grid.Column="1" Content="View Expenses History" Margin="10"/>
-        <ComboBox Grid.Row="1" Grid.Column="1" Margin="10"
+        <Label Grid.Row="0" Grid.Column="1" Content="View Expenses History" Margin="10,0,10,10" HorizontalContentAlignment="Center" HorizontalAlignment="Center"/>
+        <ComboBox Grid.Row="1" Grid.Column="1" Margin="10,0,10,20" Height="40" FontSize="16"
           ItemsSource="{Binding Categories}"
-          SelectedItem="{Binding SelectedCategory}" />
+          SelectedItem="{Binding SelectedCategory}"/>
 
-        <ListBox Grid.Row="2" Grid.ColumnSpan="3"
-         ItemsSource="{Binding FilteredExpenses}" Margin="0,10,0,0" >
-
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Border BorderThickness="0,0,0,1" BorderBrush="LightGray" Padding="5">
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock Text="{Binding Description}" FontWeight="Bold"/>
-                            <TextBlock>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" PanningMode="VerticalOnly" Grid.Row="2">
+            <ListBox ItemsSource="{Binding FilteredExpenses}" Margin="0,10,0,0" FontSize="16" >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="0,0,0,1" BorderBrush="LightGray" Padding="5">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="{Binding Description}" FontWeight="Bold"/>
+                                <TextBlock>
                                 <Run Text="Category: "/>
                                 <Run Text="{Binding Category}" />
-                            </TextBlock>
-                            <TextBlock>
+                                </TextBlock>
+                                <TextBlock>
                                 <Run Text="Amount: £"/>
                                 <Run Text="{Binding Amount}" />
-                            </TextBlock>
-                            <TextBlock Text="{Binding Date, StringFormat='{}{0:dd MMM yyyy}'}" />
-                        </StackPanel>
-                    </Border>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-
+                                </TextBlock>
+                                <TextBlock Text="{Binding Date, StringFormat='{}{0:dd MMM yyyy}'}" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </ScrollViewer>
     </Grid>
 
 </Window>
