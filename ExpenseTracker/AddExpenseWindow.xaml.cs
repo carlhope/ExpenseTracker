@@ -31,6 +31,11 @@ namespace ExpenseTracker
 
         private void SaveExpense_Click(object sender, RoutedEventArgs e)
         {
+           ViewModel.HasAttemptedSubmit = true;
+            BindingOperations.GetBindingExpression(DescriptionTextBox, TextBox.TextProperty)?.UpdateSource();
+            BindingOperations.GetBindingExpression(AmountTextBox, TextBox.TextProperty)?.UpdateSource();
+
+
             if (ViewModel.SaveExpense())
             {
 

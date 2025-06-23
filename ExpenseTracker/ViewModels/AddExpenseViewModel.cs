@@ -13,10 +13,11 @@ using System.Windows.Input;
 
 namespace ExpenseTracker.ViewModels
 {
-    public class AddExpenseViewModel : INotifyPropertyChanged
+    public class AddExpenseViewModel : INotifyPropertyChanged, IDataErrorInfo
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         public ObservableCollection<ExpenseCategory> Categories { get; } = new ObservableCollection<ExpenseCategory>((ExpenseCategory[])Enum.GetValues(typeof(ExpenseCategory)));
+        public bool HasAttemptedSubmit { get; set; }
 
         private string _description;
         public string Description
@@ -65,6 +66,7 @@ namespace ExpenseTracker.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         public bool SaveExpense()
         {
+           
 
             if (!Regex.IsMatch(AmountInput ?? "", @"^\d+(\.\d{1,2})?$"))
                 return false;
@@ -85,6 +87,29 @@ namespace ExpenseTracker.ViewModels
 
             ExpenseStore.Expenses.Add(expense);
             return true;
+        }
+
+        
+        public string Error => null!;
+
+        public string this[string columnName]
+        {
+            get
+            {
+                if (!HasAttemptedSubmit) return null!;
+                switch (columnName)
+                {
+                    case nameof(AmountInput):
+                        if (!Regex.IsMatch(AmountInput ?? "", @"^\d+(\.\d{1,2})?$"))
+                            return "Amount must be a valid number.";
+                        break;
+                    case nameof(Description):
+                        if (string.IsNullOrWhiteSpace(Description))
+                            return "Description is required.";
+                        break;
+                }
+                return null!;
+            }
         }
     }
 }
