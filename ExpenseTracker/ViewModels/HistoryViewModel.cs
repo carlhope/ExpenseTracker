@@ -15,7 +15,6 @@ namespace ExpenseTracker.ViewModels
         public ObservableCollection<Expense> AllExpenses { get; }
         public ObservableCollection<Expense> FilteredExpenses { get; } = new();
 
-        ///
          public ObservableCollection<CategoryFilterOption> CategoryOptions { get; }
 
         private CategoryFilterOption _selectedCategoryOption;
@@ -33,7 +32,7 @@ namespace ExpenseTracker.ViewModels
             }
         }
 
-        ///
+
 
         private ExpenseCategory? selectedCategory;
         public ExpenseCategory? SelectedCategory
@@ -50,19 +49,17 @@ namespace ExpenseTracker.ViewModels
             }
         }
 
-        //public IEnumerable<ExpenseCategory> Categories =>
-        //    Enum.GetValues(typeof(ExpenseCategory)).Cast<ExpenseCategory>();
+
 
         public HistoryViewModel()
         {
             var sorted = ExpenseStore.Expenses.OrderByDescending(e => e.Date);
             AllExpenses = new ObservableCollection<Expense>(sorted);
-            ///
             // Populate options, with "All" first
             CategoryOptions = new ObservableCollection<CategoryFilterOption>
-    {
-        new CategoryFilterOption { DisplayName = "All", Category = null }
-    };
+            {
+                new CategoryFilterOption { DisplayName = "All", Category = null }
+            };
 
             foreach (var cat in Enum.GetValues(typeof(ExpenseCategory)).Cast<ExpenseCategory>())
             {
@@ -75,7 +72,6 @@ namespace ExpenseTracker.ViewModels
 
             SelectedCategoryOption = CategoryOptions.First();
 
-            ///
             ExpenseStore.Expenses.CollectionChanged += (_, __) => RefreshAllExpenses();
             ApplyFilter();
         }
